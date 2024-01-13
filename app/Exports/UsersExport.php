@@ -25,7 +25,6 @@ class UsersExport implements FromCollection , WithHeadings
             'full_name' => 'Full Name',
             'email' => 'User Email',
             'phone_number' => 'Phone Number',
-            // Add more headings as needed
         ];
 
         // Filter the custom headings based on selected columns

@@ -18,10 +18,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+// Routes of Import
 Route::get('/import/view' , [UserController::class,'importView'])->name('import.view');
 Route::post('/import' , [UserController::class,'import'])->name('import.users');
 
-
-
+// Routes of Export
 Route::get('/export/view' , [UserController::class,'exportView'])->name('export.view');
 Route::post('/export' , [UserController::class,'export'])->name('export.users');

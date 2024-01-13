@@ -6,7 +6,6 @@ use App\Imports\UserImport;
 use App\Exports\UsersExport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use GrahamCampbell\ResultType\Success;
 
 class UserController extends Controller
 {
@@ -17,9 +16,9 @@ class UserController extends Controller
     public function export(Request $request)
     {
         $selectedCoulmns = $request->input('columns', []);
-        if (empty($selectedColumns)) {
-            // If no columns are selected, export all columns
-            $selectedColumns = ['full_name', 'email', 'phone_number'];
+        if (empty($selectedCoulmns) || $selectedCoulmns == null) {
+            //  If no columns are selected, export all columns
+            $selectedCoulmns = ['full_name', 'email', 'phone_number'];
         }
         return Excel::download(new UsersExport($selectedCoulmns), 'users.xlsx');
     }
@@ -31,9 +30,7 @@ class UserController extends Controller
 
     public function import(Request $request)
     {
-        $request->validate([
-            'file' => "required"
-        ]);
+
         $request->validate([
             'file' => 'required|mimes:xlsx,xls|max:2048',
         ]);
@@ -45,6 +42,5 @@ class UserController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('import.view')->with('error', 'Error importing data. Please check your file and try again.');
         }
-
     }
 }
